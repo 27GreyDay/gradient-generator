@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRADIENT GENERATOR</title>
+</head>
+<body>
+    <h2>- GRADIENT GENERATOR -</h2>
+  
+  <form>
+    <h3>Настройки</h3>
+
+    <div class="colors">
+      <div>
+        <label for="color">Цвет 1</label>
+        <input type="color" id="color1" value="#FF7300">
+      </div>
+      <div>
+        <label for="color">Цвет 2</label>
+        <input type="color" id="color2" value="#FF0000">
+      </div>
+    </div>
+
+    <label for="offsetX">Смещение 1-го цвета</label>
+    <input type="range" id="offset1" min="0" max="100" step="1" value="25">
+    
+    <label for="offsetY">Смещение 2-го цвета</label>
+    <input type="range" id="offset2" min="0" max="100" step="1" value="75">
+    
+    <label for="blur">Направление</label>
+    <input type="range" id="direction" min="0" max="360" step="1" value="90">
+    
+    <h3>Результат</h3>
+    <div id="result"></div>
+    <textarea id="cssCode" readonly></textarea>
+  </form>
+
+  <script>
+    function generateCss() {
+      let color1 = document.getElementById('color1').value
+      let color2 = document.getElementById('color2').value
+      let offset1 = document.getElementById('offset1').value
+      let offset2 = document.getElementById('offset2').value
+      let direction = document.getElementById('direction').value
+
+      let result = document.getElementById('result')
+      let textarea = document.getElementById('cssCode')
+
+      let str = `linear-gradient(${direction}deg,${color1} ${offset1}%,${color2} ${offset2}%)`
+      textarea.value = `background: ${color1};\nbackground: ${str};`
+      result.style.background = str
+    }
+    for(let item of document.querySelectorAll('input')) {
+      item.addEventListener('input',generateCss)
+    }
+    generateCss() 
+  </script>
+
+  <style>
+    body {
+        font-family: "Calibri";
+    }
+    h2 {
+        margin: 0;
+        text-transform: uppercase;
+        padding-left: 40px; 
+    }
+    h3 {
+        text-transform: uppercase; 
+        margin-top: 10px;
+        margin-right: -10px;
+        margin-left: -10px;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: rgb(68, 68, 68);
+        color: white;
+    }
+    form {
+        padding: 10px;
+        width: 320px;
+        display: inline-flex;
+        flex-direction: column;
+    }
+    #result {
+        width: 320px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+    textarea {
+        resize: none;
+        height: 50px;
+    }
+    .form-group {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 2px dashed gray;
+    }
+    #color1, #color2 {
+        width: 40px;
+        height: 40px;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+    .colors {
+        display: flex;
+        width: 150px;
+    }
+  </style>
+</body>
+</html>
